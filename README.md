@@ -20,7 +20,7 @@
 
 > Screenshots are from the browser demo build (`flutter run -d chrome`), which runs on generated sample data. The demo has no SMS, camera or Gemma, so its Ask tab shows the rule-based parser.
 
-**[Download the APK](https://github.com/alok-kul5/ai-finance-tracker-flutter/releases/latest)** (Android 7.0+, sideload). It is not on the Play Store, because the developer account costs money.
+**[Download the APK](https://github.com/alok-kul5/ai-finance-tracker-flutter/releases/latest)** (Android 7.0+, 64-bit ARM phones, sideload). It is not on the Play Store, because the developer account costs money.
 
 ---
 
@@ -180,6 +180,7 @@ For CI, add `SUPABASE_URL` and `SUPABASE_ANON_KEY` as repository secrets. The wo
 ## Notes and limits
 
 - The release APK is signed with the CI runner's debug key, which is fine for sideloading a portfolio build. Because each CI run has a different key, uninstall before installing a newer APK.
+- The APK is built for 64-bit ARM (`arm64-v8a`) only, which covers nearly every Android phone from the last several years and keeps the download small. Build other ABIs with `flutter build apk --release` if you need them.
 - `READ_SMS` is a restricted permission on the Play Store. That is one more reason this app ships through GitHub Releases.
 - SMS formats change. The parser covers the common shapes and is easy to extend: add a sample to `sms_parser_test.dart` first.
 
