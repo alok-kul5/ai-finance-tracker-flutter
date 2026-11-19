@@ -42,12 +42,18 @@ class RuleIntentParser {
         ? TxnDirection.credit
         : TxnDirection.debit;
 
+    final merchant = _merchant(q, knownMerchants);
+    var category = direction == TxnDirection.credit ? null : _category(q);
+    // "uber rides" names a merchant; its category is implied, not a filter.
+    if (merchant != null && category != null && (kCategorySynonyms[category] ?? const []).contains(merchant)) {
+      category = null;
+    }
     return SpendQuery(
       metric: _metric(q),
       range: parseRange(q, now),
       direction: direction,
-      category: direction == TxnDirection.credit ? null : _category(q),
-      merchant: _merchant(q, knownMerchants),
+      category: category,
+      merchant: merchant,
     );
   }
 

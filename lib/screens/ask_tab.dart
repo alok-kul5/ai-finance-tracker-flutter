@@ -208,7 +208,7 @@ class _AnswerBubble extends StatelessWidget {
           const SizedBox(height: 10),
           Wrap(spacing: 6, runSpacing: 6, children: [
             _Tag(icon: viaModel ? Icons.memory_rounded : Icons.rule_rounded, label: viaModel ? 'Read by Gemma' : 'Read by rules', color: viaModel ? Brand.violet : k.secondaryLabel),
-            _Tag(icon: Icons.calculate_rounded, label: 'Computed from ${a.result.count} txns', color: k.positive),
+            _Tag(icon: Icons.calculate_rounded, label: 'Computed from ${a.result.count} txn${a.result.count == 1 ? '' : 's'}', color: k.positive),
           ]),
           const SizedBox(height: 6),
           Text(SpendingAssistant.describe(a.intent.query), style: KText.caption(context).copyWith(fontSize: 11.5, color: k.tertiaryLabel)),
