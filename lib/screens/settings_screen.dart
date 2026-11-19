@@ -167,7 +167,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         ]),
         const SizedBox(height: 16),
-        Center(child: Text('Kharcha 1.0.0', style: KText.caption(context).copyWith(color: k.tertiaryLabel))),
+        Center(child: Text('Kharcha 1.0.1', style: KText.caption(context).copyWith(color: k.tertiaryLabel))),
       ]),
     );
   }

@@ -46,13 +46,9 @@ android {
                 // Kharcha only runs text models, so leave its ~24 MB out.
                 "**/libmediapipe_tasks_vision_image_generator_jni.so",
                 "**/libimagegenerator_gpu.so",
-                // 64-bit ARM only. (An ndk.abiFilters setting is overridden by the
-                // Flutter Gradle plugin, so the plugins' MediaPipe and ML Kit
-                // libraries for other ABIs are dropped here instead.)
-                "lib/x86_64/**",
-                "lib/x86/**",
-                "lib/armeabi-v7a/**",
             )
+            // Small per-ABI APKs come from `flutter build apk --split-per-abi`
+            // (see .github/workflows/ci.yml); the plain build stays universal.
         }
     }
 }

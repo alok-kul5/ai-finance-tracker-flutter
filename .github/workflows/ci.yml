@@ -53,17 +53,28 @@ jobs:
 
       # Sync stays off unless the repository has these secrets; the app is
       # fully usable without them.
-      - name: Build release APK
+      # A universal APK (every ABI) and small per-ABI APKs. Most phones want
+      # the arm64 one.
+      - name: Build release APKs
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: >
-          flutter build apk --release --target-platform android-arm64
-          --dart-define=SUPABASE_URL="$SUPABASE_URL"
-          --dart-define=SUPABASE_ANON_KEY="$SUPABASE_ANON_KEY"
+        run: |
+          DEFINES="--dart-define=SUPABASE_URL=$SUPABASE_URL --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY"
+          flutter build apk --release $DEFINES
+          cp build/app/outputs/flutter-apk/app-release.apk universal.apk
+          flutter build apk --release --split-per-abi $DEFINES
 
-      - name: Rename APK
-        run: cp build/app/outputs/flutter-apk/app-release.apk kharcha-${{ github.ref_type == 'tag' && github.ref_name || github.sha }}.apk
+      - name: Name APKs
+        env:
+          VERSION: ${{ github.ref_type == 'tag' && github.ref_name || format('dev-{0}', github.sha) }}
+        run: |
+          out=build/app/outputs/flutter-apk
+          mv universal.apk "kharcha-$VERSION-universal.apk"
+          cp "$out/app-arm64-v8a-release.apk" "kharcha-$VERSION-arm64.apk"
+          cp "$out/app-armeabi-v7a-release.apk" "kharcha-$VERSION-armv7.apk"
+          cp "$out/app-x86_64-release.apk" "kharcha-$VERSION-x86_64.apk"
+          ls -l kharcha-*.apk
 
       - uses: actions/upload-artifact@v4
         with:
@@ -82,7 +93,30 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: kharcha-apk
+
+      - name: Release notes with download sizes
+        env:
+          VERSION: ${{ github.ref_name }}
+        run: |
+          size() { numfmt --to=si --suffix=B --format='%.1f' "$(stat -c %s "$1")"; }
+          {
+            echo "## Download"
+            echo
+            echo "| APK | For | Size |"
+            echo "|---|---|---|"
+            echo "| **kharcha-$VERSION-arm64.apk** | Almost every phone from the last several years (64-bit ARM). **Start here.** | $(size kharcha-$VERSION-arm64.apk) |"
+            echo "| kharcha-$VERSION-armv7.apk | Older 32-bit ARM phones | $(size kharcha-$VERSION-armv7.apk) |"
+            echo "| kharcha-$VERSION-x86_64.apk | x86_64 emulators and Chromebooks | $(size kharcha-$VERSION-x86_64.apk) |"
+            echo "| kharcha-$VERSION-universal.apk | Any device (every ABI in one file) | $(size kharcha-$VERSION-universal.apk) |"
+            echo
+            echo "Android 7.0 or later. Sideload it: allow installs from your browser or file manager, then open the APK."
+            echo "The APK is signed with a CI key, so uninstall an older build before installing this one."
+            echo "The on-device Gemma model (about 550 MB) is downloaded later from Settings, only if you want it."
+          } > notes.md
+          cat notes.md
+
       - uses: softprops/action-gh-release@v2
         with:
           files: kharcha-*.apk
+          body_path: notes.md
           generate_release_notes: true
