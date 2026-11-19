@@ -32,12 +32,24 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             // A public portfolio build: signed with the CI runner's debug key, so
             // install it by sideloading (it is not a Play Store build).
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // 64-bit ARM only: the plugins' native libraries (MediaPipe, ML Kit)
+            // for x86_64 and armv7 would otherwise more than double the APK.
+            ndk { abiFilters += listOf("arm64-v8a") }
+        }
+    }
+
+    packaging {
+        jniLibs {
+            // MediaPipe's image-generation runtime ships with the LLM engine;
+            // Kharcha only runs text models, so leave its ~24 MB out.
+            excludes += listOf(
+                "**/libmediapipe_tasks_vision_image_generator_jni.so",
+                "**/libimagegenerator_gpu.so",
+            )
         }
     }
 }
