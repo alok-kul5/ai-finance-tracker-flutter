@@ -46,17 +46,15 @@ class SyncEngine {
   final RemoteStore remote;
 
   static const cursorKey = 'sync.cursor';
-  static const lastSyncKey = 'sync.last';
 
   bool _running = false;
 
-  Future<SyncReport> sync({DateTime? now}) async {
+  Future<SyncReport> sync() async {
     if (_running) return const SyncReport(pushed: 0, pulled: 0, skipped: 0);
     _running = true;
     try {
       final pushed = await _push();
       final (pulled, skipped) = await _pull();
-      await store.setValue(lastSyncKey, (now ?? DateTime.now()).toIso8601String());
       return SyncReport(pushed: pushed, pulled: pulled, skipped: skipped);
     } finally {
       _running = false;

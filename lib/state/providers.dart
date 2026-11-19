@@ -119,7 +119,6 @@ class MonthSummary {
     required this.month,
     required this.spentPaise,
     required this.incomePaise,
-    required this.previousSpentPaise,
     required this.daily,
     required this.previousDaily,
     required this.byCategory,
@@ -128,7 +127,6 @@ class MonthSummary {
   final DateTime month;
   final int spentPaise;
   final int incomePaise;
-  final int previousSpentPaise;
 
   /// Cumulative spend at the end of each day of the month (paise).
   final List<int> daily;
@@ -166,7 +164,6 @@ MonthSummary summarize(List<Txn> all, DateTime month, DateTime now) {
     month: month,
     spentPaise: spent,
     incomePaise: income,
-    previousSpentPaise: previousDaily.isEmpty ? 0 : previousDaily.last,
     daily: cumulative(month),
     previousDaily: previousDaily,
     byCategory: cats,

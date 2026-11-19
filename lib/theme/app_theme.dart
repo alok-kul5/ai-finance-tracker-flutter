@@ -123,7 +123,7 @@ abstract final class Radii {
 }
 
 /// Motion tokens: calm and quick. Things arrive on [signature] and leave on
-/// [exit]; only success overshoots ([pop]). Under reduced motion every
+/// [exit]; Under reduced motion every
 /// movement becomes a short fade.
 abstract final class Motion {
   static const press = Duration(milliseconds: 120);
@@ -139,10 +139,7 @@ abstract final class Motion {
   static const staggerMax = 6;
 
   static const signature = Cubic(0.22, 1, 0.36, 1);
-  static const emphasized = Cubic(0.05, 0.7, 0.1, 1);
   static const exit = Cubic(0.3, 0, 1, 1);
-  static const move = Cubic(0.65, 0, 0.35, 1);
-  static const pop = Cubic(0.34, 1.5, 0.64, 1);
   static const loop = Curves.easeInOutSine;
 
   static bool reduced(BuildContext context) =>
@@ -150,12 +147,6 @@ abstract final class Motion {
 
   static Duration of(BuildContext context, Duration full) => reduced(context) ? reducedFade : full;
 }
-
-/// Category colours (deep enough for white glyphs, bright enough on dark).
-const chartPalette = <Color>[
-  Color(0xff2f6bff), Color(0xff0a9fc6), Color(0xffe8790a), Color(0xffe8335a),
-  Color(0xff28a745), Color(0xffa548d6), Color(0xff8e6e4e), Color(0xff14b8a6),
-];
 
 abstract final class KText {
   static TextStyle largeTitle(BuildContext c) => TextStyle(

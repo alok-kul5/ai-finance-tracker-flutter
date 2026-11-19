@@ -11,7 +11,6 @@ PlatformServices createServices() => PlatformServices(
       notifier: const _NoNotifier(),
       models: const _NoModels(),
       openStore: () async => MemoryLedgerStore()..seed(txns: demoTxns(DateTime.now()), budgets: demoBudgets()),
-      isDemo: true,
     );
 
 class _NoSms implements SmsInbox {
@@ -54,8 +53,6 @@ class _NoModels implements ModelManager {
   Future<bool> isInstalled() async => false;
   @override
   Future<void> install({required String url, String? token, void Function(int percent)? onProgress}) async {}
-  @override
-  Future<void> installFromFile(String path) async {}
   @override
   Future<void> uninstall() async {}
   @override

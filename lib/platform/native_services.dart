@@ -22,7 +22,6 @@ PlatformServices createServices() {
     notifier: _Notifier(),
     models: models,
     openStore: () async => DriftLedgerStore(KharchaDatabase(driftDatabase(name: 'kharcha'))),
-    isDemo: false,
   );
 }
 
@@ -153,15 +152,6 @@ class GemmaModelManager implements ModelManager {
         .fromNetwork(url, token: token == null || token.isEmpty ? null : token, filename: fileName);
     if (onProgress != null) b = b.withProgress(onProgress);
     await b.install();
-    _llm.reset();
-  }
-
-  @override
-  Future<void> installFromFile(String path) async {
-    await _init();
-    await FlutterEdgeAi.installModel(modelType: ModelType.gemmaIt, fileType: ModelFileType.task)
-        .fromFile(path)
-        .install();
     _llm.reset();
   }
 

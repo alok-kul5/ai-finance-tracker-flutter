@@ -48,7 +48,6 @@ abstract interface class ModelManager {
 
   /// Downloads and activates the model, reporting 0–100.
   Future<void> install({required String url, String? token, void Function(int percent)? onProgress});
-  Future<void> installFromFile(String path);
   Future<void> uninstall();
   LlmClient get llm;
 }
@@ -60,7 +59,6 @@ class PlatformServices {
     required this.notifier,
     required this.models,
     required this.openStore,
-    required this.isDemo,
   });
 
   final SmsInbox sms;
@@ -68,9 +66,6 @@ class PlatformServices {
   final LocalNotifier notifier;
   final ModelManager models;
   final Future<LedgerStore> Function() openStore;
-
-  /// The browser build: in-memory data, seeded with a demo month.
-  final bool isDemo;
 }
 
 PlatformServices createPlatformServices() => impl.createServices();
