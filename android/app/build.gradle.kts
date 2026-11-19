@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "io.github.alokkul5.kharcha"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37 // flutter_local_notifications, permission_handler and androidx.core need 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
