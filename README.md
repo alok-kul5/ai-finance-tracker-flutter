@@ -1,7 +1,11 @@
-# Kharcha — offline-first AI personal finance
+<p align="center"><img src="docs/brand/mark.svg" width="88" height="88" alt="Kharcha logo"></p>
 
-[![CI](https://github.com/alok-kul5/ai-finance-tracker-flutter/actions/workflows/ci.yml/badge.svg)](https://github.com/alok-kul5/ai-finance-tracker-flutter/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/alok-kul5/ai-finance-tracker-flutter)](https://github.com/alok-kul5/ai-finance-tracker-flutter/releases/latest)
+<h1 align="center">Kharcha</h1>
+
+<p align="center"><b>Every rupee, sorted, on your phone.</b><br>An offline-first Flutter finance app: reads bank and UPI SMS, scans receipts on-device, and answers spending questions with an on-device LLM.</p>
+
+[![CI](https://github.com/alok-kul5/kharcha-finance/actions/workflows/ci.yml/badge.svg)](https://github.com/alok-kul5/kharcha-finance/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/alok-kul5/kharcha-finance)](https://github.com/alok-kul5/kharcha-finance/releases/latest)
 ![Flutter](https://img.shields.io/badge/Flutter-3.50-02569B?logo=flutter)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
@@ -20,7 +24,7 @@
 
 > Screenshots are from the browser demo build (`flutter run -d chrome`), which runs on generated sample data. The demo has no SMS, camera or Gemma, so its Ask tab shows the rule-based parser.
 
-**[Download the APK for Android (arm64)](https://github.com/alok-kul5/ai-finance-tracker-flutter/releases/download/v1.0.1/kharcha-v1.0.1-arm64.apk)**: Android 7.0+, fits nearly every phone from recent years, sideload it. Older 32-bit phones, emulators and a universal build are on the [release page](https://github.com/alok-kul5/ai-finance-tracker-flutter/releases/latest). It is not on the Play Store, because the developer account costs money.
+**[Download the APK for Android (arm64)](https://github.com/alok-kul5/kharcha-finance/releases/download/v1.0.1/kharcha-v1.0.1-arm64.apk)**: Android 7.0+, fits nearly every phone from recent years, sideload it. Older 32-bit phones, emulators and a universal build are on the [release page](https://github.com/alok-kul5/kharcha-finance/releases/latest). It is not on the Play Store, because the developer account costs money.
 
 ---
 
@@ -187,3 +191,7 @@ For CI, add `SUPABASE_URL` and `SUPABASE_ANON_KEY` as repository secrets. The wo
 ## License
 
 MIT. Gemma is provided under Google's [Gemma Terms of Use](https://ai.google.dev/gemma/terms); the model is downloaded by the user and is not shipped in this repository or the APK.
+
+---
+
+<sub>One of six projects by [Alok Kulkarni](https://alok.is-a.dev): [Hearth](https://github.com/alok-kul5/hearth-iot) home sensors · [Headway](https://github.com/alok-kul5/headway-transit) transit data · [Vigil](https://github.com/alok-kul5/vigil-soc) security triage · [Loupe](https://github.com/alok-kul5/loupe-vision) defect inspection · **Kharcha** personal finance · [Stockroom](https://github.com/alok-kul5/stockroom-inventory) inventory.</sub>
