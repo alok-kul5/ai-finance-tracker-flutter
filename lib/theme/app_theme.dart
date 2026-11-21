@@ -149,8 +149,13 @@ abstract final class Motion {
 }
 
 abstract final class KText {
+  /// Display face: Anybody, stretched wide for screen titles and hero amounts.
+  static const display = 'Anybody';
+  static const _wide = [FontVariation('wdth', 118), FontVariation('wght', 700)];
+
   static TextStyle largeTitle(BuildContext c) => TextStyle(
-      fontSize: 32, fontWeight: FontWeight.w700, letterSpacing: -0.8, height: 1.1, color: c.k.ink);
+      fontFamily: display, fontVariations: _wide,
+      fontSize: 30, fontWeight: FontWeight.w700, letterSpacing: -0.9, height: 1.1, color: c.k.ink);
 
   static TextStyle title(BuildContext c) =>
       TextStyle(fontSize: 20, fontWeight: FontWeight.w700, letterSpacing: -0.4, color: c.k.ink);
@@ -161,9 +166,12 @@ abstract final class KText {
   static TextStyle body(BuildContext c) => TextStyle(fontSize: 15, height: 1.4, color: c.k.ink);
 
   /// Money: tabular figures so digits don't jiggle while counting.
+  /// Big amounts (28 and up) use the wide display face.
   static TextStyle amount(BuildContext c, {double size = 17, Color? color}) => TextStyle(
+        fontFamily: size >= 28 ? display : null,
+        fontVariations: size >= 28 ? const [FontVariation('wdth', 112), FontVariation('wght', 700)] : null,
         fontSize: size,
-        fontWeight: FontWeight.w600,
+        fontWeight: size >= 28 ? FontWeight.w700 : FontWeight.w600,
         letterSpacing: size > 28 ? -1.2 : -0.2,
         height: 1.1,
         color: color ?? c.k.ink,
@@ -200,6 +208,7 @@ ThemeData buildTheme(Brightness brightness) {
   );
   final field = OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide.none);
   return ThemeData(
+    fontFamily: 'Onest',
     useMaterial3: true,
     brightness: brightness,
     colorScheme: scheme,
